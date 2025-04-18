@@ -62,7 +62,7 @@ export default function Home() {
             
               </CardContent>
               <CardFooter>
-                <Link href="/login?role=sales" className="w-full">
+                <Link href="/auth/login" className="w-full">
                   <Button className="w-full">
                     Sales Login <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -83,7 +83,7 @@ export default function Home() {
                
               </CardContent>
               <CardFooter>
-                <Link href="/login?role=support" className="w-full">
+                <Link href="/auth/login" className="w-full">
                   <Button className="w-full">
                     Support Login <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

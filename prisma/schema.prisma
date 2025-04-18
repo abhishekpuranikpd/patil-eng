@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String    @db.ObjectId
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String?
+  email                String    @unique
+  emailVerified        DateTime?
+  image                String?
+  password             String
+  role                 UserRole
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  resetToken           String?  
+  resetTokenExpiration DateTime?
+
+  // Relations
+  accounts  Account[]
+  sessions  Session[]
+  Quotation Quotation[]
+}
+
+enum UserRole {
+  SUPERADMIN
+  ADMIN
+  SALES
+  SUPPORT
+}
+
+model Customer {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  contact   String
+  address   String
+  inquiries Inquiry[]
+  createdAt DateTime  @default(now())
+}
+
+model Inquiry {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  customerId String        @db.ObjectId
+  source     InquirySource
+  message    String?
+  status     InquiryStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  customer   Customer      @relation(fields: [customerId], references: [id])
+  Quotation  Quotation[]
+}
+
+enum InquirySource {
+  PHONE
+  EMAIL
+  WHATSAPP
+  MANUAL
+}
+
+enum InquiryStatus {
+  PENDING
+  FOLLOWED_UP
+  CONVERTED
+}
+
+model Quotation {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  inquiryId   String          @db.ObjectId
+  salesUserId String          @db.ObjectId
+  amount      Float
+  status      QuotationStatus @default(PENDING)
+  createdAt   DateTime        @default(now())
+
+  inquiry   Inquiry @relation(fields: [inquiryId], references: [id])
+  salesUser User    @relation(fields: [salesUserId], references: [id])
+}
+
+enum QuotationStatus {
+  PENDING
+  IN_PROCESS
+  CONVERTED
+  REJECTED
+}

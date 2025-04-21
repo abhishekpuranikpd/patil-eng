@@ -4,7 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -59,7 +66,11 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-6 lg:px-8 ">
+    <Dialog>
+    <DialogTrigger asChild>
+      <Button>Create Employee</Button>
+    </DialogTrigger>
+    <DialogContent>
      
 
       <Card className="w-full max-w-md z-10 border-0 shadow-xl">
@@ -181,6 +192,7 @@ export default function Register() {
           </form>
         </CardContent>
       </Card>
-    </div>
+  </DialogContent>
+  </Dialog>
   );
 }

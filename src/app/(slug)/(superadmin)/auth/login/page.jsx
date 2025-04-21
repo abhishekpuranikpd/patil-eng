@@ -37,7 +37,9 @@ export default function Login() {
       alert("Invalid credentials");
     } else {
       alert("Login successful!");
-      router.push("/dashboard");
+  
+      window.location.href="/dashboard"
+  
     }
   };
 

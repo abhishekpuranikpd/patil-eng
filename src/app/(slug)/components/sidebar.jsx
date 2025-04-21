@@ -40,7 +40,7 @@ const sidebarItems = [
   },
   {
     label: "Inquiries",
-    href: "/inquiries",
+    href: "/inquiry",
     icon: <FileText className="w-4 h-4" />,
     roles: ["SUPERADMIN", "ADMIN", "SALES", "SUPPORT"],
   },

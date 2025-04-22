@@ -44,7 +44,7 @@ model User {
   role                 UserRole
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
-  resetToken           String?  
+  resetToken           String?
   resetTokenExpiration DateTime?
 
   // Relations
@@ -101,9 +101,9 @@ model Quotation {
   amount      Float
   status      QuotationStatus @default(PENDING)
   createdAt   DateTime        @default(now())
-
-  inquiry   Inquiry @relation(fields: [inquiryId], references: [id])
-  salesUser User    @relation(fields: [salesUserId], references: [id])
+  notes       String?
+  inquiry     Inquiry         @relation(fields: [inquiryId], references: [id])
+  salesUser   User            @relation(fields: [salesUserId], references: [id])
 }
 
 enum QuotationStatus {

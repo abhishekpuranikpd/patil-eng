@@ -11,7 +11,13 @@ import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PlusCircle, FileDown, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  PlusCircle,
+  FileDown,
+  ChevronLeft,
+  ChevronRight,
+  PlusCircleIcon,
+} from "lucide-react";
 import Link from "next/link";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -23,22 +29,35 @@ export default function CustomerTable({ data }) {
   const columns = useMemo(
     () => [
       {
-        header: "Name",
-        accessorKey: "name",
+        header: "Client ID",
+        accessorKey: "clientId",
       },
       {
-        header: "Mobile",
-        accessorKey: "contact",
+        header: "Name",
+        accessorKey: "name",
       },
       {
         header: "Address",
         accessorKey: "address",
       },
       {
-        header: "Created At",
-        accessorKey: "createdAt",
-        cell: ({ row }) =>
-          new Date(row.original.createdAt).toLocaleDateString("en-gb"),
+        header: "City",
+        accessorKey: "city",
+      },
+
+      {
+        header: "Mobile",
+        accessorKey: "mobile",
+      },
+      {
+        header: "Phone",
+        accessorKey: "phone",
+      },
+
+      {
+        header: "Active",
+        accessorKey: "active",
+        cell: ({ row }) => (row.original.active === "Y" ? "Yes" : "No"),
       },
     ],
     []
@@ -93,7 +112,13 @@ export default function CustomerTable({ data }) {
             >
               <FileDown className="mr-2 h-4 w-4" /> Export
             </Button>
-            <CreateCustomer />
+            <Link href={"/customers/new"}>
+              {" "}
+              <Button className="bg-primary hover:bg-primary">
+                <PlusCircleIcon className="mr-2 h-4 w-4" />
+                New Customer
+              </Button>
+            </Link>
           </div>
         </CardHeader>
         <CardContent>

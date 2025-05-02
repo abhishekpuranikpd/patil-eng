@@ -9,7 +9,7 @@ const quotationsPage = async() => {
         where : {status : "PENDING"},include : {customer :true}
     })
   return (
-    <div><CreateQuotation session={session} inquiries={inquiries}/></div>
+    <div><CreateQuotation session={session} customerId={inquiries.customerId}/></div>
   )
 }
 

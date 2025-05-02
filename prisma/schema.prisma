@@ -83,7 +83,14 @@ model Customer {
   salesPerson User?     @relation(fields: [salesPersonId], references: [id])
   inquiries   Inquiry[]
 
-  createdAt DateTime @default(now())
+  createdAt DateTime    @default(now())
+  Quotation Quotation[]
+}
+
+model Product {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  no    String     @unique
+  title String?
 }
 
 model Inquiry {
@@ -112,15 +119,81 @@ enum InquiryStatus {
 }
 
 model Quotation {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
-  inquiryId   String          @db.ObjectId
-  salesUserId String          @db.ObjectId
-  amount      Float
-  status      QuotationStatus @default(PENDING)
-  createdAt   DateTime        @default(now())
-  notes       String?
-  inquiry     Inquiry         @relation(fields: [inquiryId], references: [id])
-  salesUser   User            @relation(fields: [salesUserId], references: [id])
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  quotationNo String      @unique
+  customerId  String   @db.ObjectId
+  customer    Customer @relation(fields: [customerId], references: [id])
+
+  date          DateTime @default(now())
+  contactPerson String?
+  subject       String? // e.g., QUOTATION FOR KSB MAKE PUMPS
+
+  // OPERATING DATA
+  fluidHandled    String?
+  temperature     String?
+  specificGravity String?
+  viscosity       String?
+  capacity        String?
+  totalHead       String?
+  npsha           String?
+
+  // PUMP DETAILS
+  pumpType       String?
+  bearingBracket String?
+  npshr          String?
+  speedRpm       String?
+  efficiency     String?
+  powerAbsorbed  String?
+  minFlow        String?
+  maxFlow        String?
+  shutoffHead    String?
+  maxBkw         String?
+
+  // IMPELLER
+  impellerType        String?
+  impellerDia         String?
+  impellerDiaRange    String? // e.g., 120/80
+  suctionNozzleSize   String?
+  dischargeNozzleSize String?
+  pipeSizes           String?
+  flangeStandardSuc   String?
+  flangeStandardDis   String?
+
+  // MATERIAL OF CONSTRUCTION
+  casingMaterial   String?
+  shaftMaterial    String?
+  impellerMaterial String?
+  sleeveMaterial   String?
+
+  // SHAFT SEALING
+  sealMake     String?
+  sealSize     String?
+  sealTypeCode String?
+
+  // MOTOR
+  motorMake        String?
+  motorRatingFrame String?
+
+  // COMMERCIALS
+  pumpPrice      String?
+  baseFramePrice String?
+  couplingPrice  String?
+  motorPrice     String?
+  quantity       String?
+
+  // TERMS & NOTES
+  notes          String?
+  taxes          String?
+  paymentTerms   String?
+  deliveryTerms  String?
+  deliveryPeriod String?
+  transportation String?
+
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
+  Inquiry   Inquiry? @relation(fields: [inquiryId], references: [id])
+  inquiryId String?  @db.ObjectId
 }
 
 enum QuotationStatus {

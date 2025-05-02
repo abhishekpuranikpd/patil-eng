@@ -26,6 +26,8 @@ import CreateCustomer from "./new-cust";
 export default function CustomerTable({ data }) {
   const [globalFilter, setGlobalFilter] = useState("");
 
+
+  
   const columns = useMemo(
     () => [
       {
@@ -35,6 +37,13 @@ export default function CustomerTable({ data }) {
       {
         header: "Name",
         accessorKey: "name",
+        cell: ({ row }) => (
+          <Link href={`/customers/${row.original.id}`}>
+            <span style={{ color: 'blue', textDecoration: 'underline' }}>
+              {row.original.name}
+            </span>
+          </Link>
+        ),
       },
       {
         header: "Address",
@@ -44,7 +53,6 @@ export default function CustomerTable({ data }) {
         header: "City",
         accessorKey: "city",
       },
-
       {
         header: "Mobile",
         accessorKey: "mobile",
@@ -53,7 +61,6 @@ export default function CustomerTable({ data }) {
         header: "Phone",
         accessorKey: "phone",
       },
-
       {
         header: "Active",
         accessorKey: "active",
@@ -62,6 +69,7 @@ export default function CustomerTable({ data }) {
     ],
     []
   );
+  
 
   const table = useReactTable({
     data,

@@ -44,6 +44,7 @@ const sidebarItems = [
     icon: <FileText className="w-4 h-4" />,
     roles: ["SUPERADMIN", "ADMIN", "SALES", "SUPPORT"],
   },
+
   {
     label: "Quotations",
     href: "/quotations",
@@ -51,17 +52,24 @@ const sidebarItems = [
     roles: ["SUPERADMIN", "ADMIN", "SALES"],
   },
   {
-    label: "Orders",
-    href: "/orders",
+    label: "Products",
+    href: "/product",
     icon: <Package className="w-4 h-4" />,
-    roles: ["SUPERADMIN", "ADMIN"],
+    roles: ["SUPERADMIN", "ADMIN", "SALES"],
   },
-  {
-    label: "Reports",
-    href: "/reports",
-    icon: <BarChart className="w-4 h-4" />,
-    roles: ["SUPERADMIN", "ADMIN"],
-  },
+  // {
+  //   label: "Orders",
+  //   href: "/orders",
+  //   icon: <Package className="w-4 h-4" />,
+  //   roles: ["SUPERADMIN", "ADMIN"],
+  // },
+
+  // {
+  //   label: "Reports",
+  //   href: "/reports",
+  //   icon: <BarChart className="w-4 h-4" />,
+  //   roles: ["SUPERADMIN", "ADMIN"],
+  // },
   {
     label: "Team",
     href: "/team",

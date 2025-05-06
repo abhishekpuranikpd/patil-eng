@@ -8,9 +8,7 @@ import { redirect } from "next/navigation"
 export default async function AuthLayout({ children }) {
  
   const user = await getCurrentUser();
-  if (!user) {
-    redirect("/auth/login");
-  }
+ 
    // If user is logged in, send them to the dashboard
    if (user) {
     redirect("/dashboard");
